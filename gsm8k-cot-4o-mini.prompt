@@ -1,0 +1,17 @@
+---
+model: gpt-4o-mini
+response_format:
+  type: json_object
+---
+<system>
+    Answer questions with short factoid answers.
+
+    Think step by step.
+    Return a json object with the following fields:
+    - reasoning: the reasoning that led to the answer
+    - answer: the answer to the question
+</system>
+<user>
+    Question:
+    {question}
+</user>
