@@ -1,0 +1,88 @@
+---
+fewshot:
+- inputs:
+    question: Ali had a stock of 800 books in his Room. He sold 60 on Monday, 10 on
+      Tuesday, 20 on Wednesday, 44 on Thursday and 66 on Friday. How many books were
+      not sold?
+  metadata:
+    split: train
+  outputs:
+    answer: '600'
+    gold_reasoning: "We look first for the total number of books that were sold: 60\
+      \ + 10 + 20 + 44 + 66 = <<60+10+20+44+66=200>>200 books. So the total number\
+      \ of books that were not sold is: 800 \u2013 200 = <<800-200=600>>600 books."
+- inputs:
+    question: A store sold a certain brand of jeans for $40. They only have few pairs
+      of jeans left so they decided to give 10% discount on every two pairs of jeans
+      bought by a customer at any one time. How much will a customer pay for 3 pairs
+      of jeans?
+  metadata:
+    split: train
+  outputs:
+    answer: '112'
+    gold_reasoning: Two pairs of jeans cost $40 x 2 = $<<40*2=80>>80. A discount of
+      $80 x 10/100 = $<<80*10/100=8>>8 will be given for this. Hence, the cost of
+      two pairs of jeans will now be $80 - $8 = $<<80-8=72>>72. Therefore, the customer
+      will pay $72 + $40 = $<<72+40=112>>112 for the three pairs of jeans.
+- inputs:
+    question: Billy is breeding mice for an experiment. He starts with 8 mice, who
+      each have 6 pups. When the pups grow up, all the mice have another 6 pups. Then
+      each adult mouse eats 2 of their pups due to the stress of overcrowding. How
+      many mice are left?
+  metadata:
+    split: train
+  outputs:
+    answer: '280'
+    gold_reasoning: 'First find the number of pups in the first generation: 8 mice
+      * 6 pups/mouse = <<8*6=48>>48 pups Then add the number of adult mice to find
+      the total number of mice: 48 pups + 8 mice = <<48+8=56>>56 mice Then find the
+      number of pups per mouse that survive from the second generation: 6 pups/mouse
+      - 2 pups/mouse = <<6-2=4>>4 pups/mouse Then multiply that number by the number
+      of adult mice to find the number of pups in the second generation: 56 mice *
+      4 pups/mouse = <<56*4=224>>224 mice Then add the number of adult mice to the
+      number of second-generation pups to find the total number of mice: 224 mice
+      + 56 mice = <<224+56=280>>280 mice'
+- inputs:
+    question: Charlotte needs to know how much money to have with her when she goes
+      to the shoe store. How much money should Charlotte bring to buy a pair of boots,
+      if the original price is $90 and there is a discount of 20%?
+  metadata:
+    split: train
+  outputs:
+    answer: '72'
+    gold_reasoning: The amount of the discount is 20/100 * $90 original price = $<<20/100*90=18>>18
+      Charlotte needs to bring the $90 - $18 discount = $<<90-18=72>>72
+- inputs:
+    question: "It\u2019s spring! The gardener at Parc Municipal orders flowers. He\
+      \ takes 250 tulips, 375 carnations and 320 roses. Each flower is sold for 2\u20AC\
+      . Calculate the total expenses."
+  metadata:
+    split: train
+  outputs:
+    answer: '1890'
+    gold_reasoning: "First we calculate the number of flowers: 250 + 375 + 320 = <<250+375+320=945>>945\u20AC\
+      \ Then the expense: 945 X 2 = <<945*2=1890>>1890\u20AC So, the total expenditure\
+      \ is \u20AC<<1890=1890>>1890."
+inputs:
+  question: The question to be answered.
+model: gpt-4o-mini
+name: gsm8k-base
+outputs:
+  answer: The answer to the question.
+response_format:
+  json_schema: null
+  type: json_object
+---
+<system>
+You are a meticulous and logical mathematician. When presented with a math problem, you solve it by breaking it down step by step. Your goal is to ensure each step of your reasoning is clear and correct. 
+
+Your output must be formatted as a JSON object containing the step-by-step reasoning (gold_reasoning) and the final answer (answer). Use LaTeX style for inline calculations.
+</system>
+<user>
+Task demonstrations:
+{_FEWSHOT_}
+
+Now, please solve the following math problem step-by-step and provide your answer in JSON format:
+Question:
+{question}
+</user>

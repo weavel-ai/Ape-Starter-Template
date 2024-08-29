@@ -1,0 +1,71 @@
+---
+fewshot:
+- inputs:
+    question: John uses the bathroom every 50 minutes.  How many times does he use
+      the bathroom during a 2.5-hour movie?
+  metadata:
+    split: train
+  outputs:
+    answer: '3'
+    gold_reasoning: The movie last 2.5*60=<<2.5*60=150>>150 minutes So he uses the
+      bathroom 150/50=<<150/50=3>>3 times
+- inputs:
+    question: Jorge is 24 years younger than Simon. In 2005, Jorge is 16 years old.
+      In 2010, how old would Simon be?
+  metadata:
+    split: train
+  outputs:
+    answer: '45'
+    gold_reasoning: In 2005, Simon was 16+24 = <<16+24=40>>40 years old. There are
+      2010-2005 = <<2010-2005=5>>5 years between 2005 and 2010. In 2010 Simon would
+      be 40+5 = 45 years old.
+- inputs:
+    question: Megan pays $16 for a shirt that costs $22 before sales. What is the
+      amount of the discount?
+  metadata:
+    split: train
+  outputs:
+    answer: '6'
+    gold_reasoning: 'Let x be the amount of the discount. We have, 22 - x = $16 We
+      change the writing of the equation: 22 - x + x = 16 + x So, 22 = 16 + x We then
+      Remove 16 from both sides: 22 - 16 = 16 + x - 16 So, 22 - 16 = x So, the amount
+      of the discount is x = $<<6=6>>6.'
+- inputs:
+    question: Paddington has 40 more goats than Washington. If Washington has 140
+      goats, how many goats do they have in total?
+  metadata:
+    split: train
+  outputs:
+    answer: '320'
+    gold_reasoning: If Washington has 140 goats, Washington has 140+40 = <<140+40=180>>180
+      goats. In total, they have 140+180 = <<140+180=320>>320 goats
+- inputs:
+    question: Robin likes to bake cupcakes for friends and to make her puppy North
+      happy. Once Robin ate four cupcakes with chocolate sauce and twice as many cupcakes
+      with buttercream frosting on her own. How many cupcakes did Robin eat?
+  metadata:
+    split: train
+  outputs:
+    answer: '12'
+    gold_reasoning: Robin ate twice as many buttercream cupcakes as chocolate sauce
+      cupcakes, or 2 * 4 = <<2*4=8>>8. So in total she ate 4 + 8 = <<4+8=12>>12 cupcakes.
+inputs:
+  question: The question to be answered.
+model: gpt-4o-mini
+name: gsm8k-base
+outputs:
+  answer: The answer to the question.
+response_format:
+  json_schema: null
+  type: json_object
+---
+<system>
+You are a math tutor who explains problems step-by-step to help a student understand the solution. Your goal is to solve math problems clearly and thoroughly, showing all necessary steps. Make sure to format your output as a JSON object. Each step should be clearly explained, and calculations should be shown inline as needed. Remember to conclude with a concise and accurate final answer.
+</system>
+<user>
+Task demonstrations:
+{_FEWSHOT_}
+
+Now perform the task for the following question:
+{question}
+</user>

@@ -1,0 +1,84 @@
+---
+fewshot:
+- inputs:
+    question: Loris needs three more books to have the same number as Lamont, who
+      has twice the number of books Darryl has. If Darryl has 20 books, calculate
+      the total number of books the three have.
+  metadata:
+    split: train
+  outputs:
+    answer: '97'
+    gold_reasoning: Since Darryl has 20 books, Lamont, who has twice the number of
+      books Darryl has, has 20*2 = <<20*2=40>>40 books. The total number of books
+      both Darryl and Lamont has is 40+20 = <<40+20=60>>60 books. To have the same
+      number of books as Lamont, Loris needs 3 more books, meaning she has 40-3 =
+      <<40-3=37>>37 books. In total, the three has 60+37= <<60+37=97>>97 books
+- inputs:
+    question: Edmonton is 220 kilometers north of Red Deer. Calgary is 110 kilometers
+      south of Red Deer. If you travel at 110 kilometers per hour, how long will it
+      take to get from Edmonton to Calgary?
+  metadata:
+    split: train
+  outputs:
+    answer: '3'
+    gold_reasoning: Total distance travelled is 220km + 110km = <<220+110=330>>330
+      km. Time to travel that far is 330km / 110km/hour = <<330/110=3>>3 hours.
+- inputs:
+    question: A bird is building a nest from twigs. The bird has put twelve twigs
+      together already to make a circle. For each twig it placed into the circle,
+      it wants to weave in six more twigs to fill out the nest. It knows a tree that
+      has dropped a third of the twigs it needs. How many twigs will the bird still
+      need to find to finish its nest?
+  metadata:
+    split: train
+  outputs:
+    answer: '48'
+    gold_reasoning: The bird wants 12 * 6 = <<12*6=72>>72 twigs to add to the nest.
+      It knows a tree that has dropped 72 * 1 / 3 = <<72*1/3=24>>24 twigs. Thus, the
+      bird will still need 72 - 24 = <<72-24=48>>48 twigs to finish the nest.
+- inputs:
+    question: Jackie walks 2 miles each day while Jessie walks 1.5 miles each day.
+      How many more miles, in all, does Jackie walk than Jessie walk in 6 days?
+  metadata:
+    split: train
+  outputs:
+    answer: '3'
+    gold_reasoning: Jackie walks 2 - 1.5 = <<2-1.5=0.5>>0.5 miles more each day than
+      Jessie. So in 6 days, Jakie walks 0.5 x 6 = <<0.5*6=3>>3 miles more than Jessie.
+- inputs:
+    question: In four years, Suzy will be twice Mary's age then. If Suzy is 20 now,
+      how old is Mary?
+  metadata:
+    split: train
+  outputs:
+    answer: '8'
+    gold_reasoning: In four years, Suzy will be 20+4=<<20+4=24>>24. Then Mary will
+      be 24/2=<<24/2=12>>12. Then Mary is now 12-4=<<12-4=8>>8.
+inputs:
+  question: The question to be answered.
+model: gpt-4o-mini
+name: gsm8k-base
+outputs:
+  answer: The answer to the question.
+response_format:
+  json_schema: null
+  type: json_object
+---
+<system>
+You are a meticulous and precise mathematician. Your job is to solve math problems by providing clear, step-by-step reasoning followed by the final answer. Your output must be formatted as a JSON object with two keys: "gold_reasoning" for the detailed reasoning and "answer" for the final answer. Think step-by-step to ensure accuracy.
+
+Please use the following structure for the output:
+{
+  "gold_reasoning": "[Your detailed reasoning]",
+  "answer": "[Your final answer]"
+}
+
+You should always format your reasoning in a LaTeX-style to emphasize calculations. Ensure consistency and correctness in your work.
+</system>
+<user>
+Task demonstrations:
+{_FEWSHOT_}
+
+Now perform the task for the following question:
+{question}
+</user>

@@ -1,0 +1,98 @@
+---
+fewshot:
+- inputs:
+    question: A lot of people have been sick at Gary's workplace, so he's been working
+      a lot of extra shifts to fill in for people. As a result, he's earned some overtime
+      (where every hour after 40 he earns 1.5 times his normal wage.) His paycheck
+      (before taxes are taken out) came out to $696. If Gary normally earns $12 per
+      hour, how many hours did he work that week?
+  metadata:
+    split: train
+  outputs:
+    answer: '52'
+    gold_reasoning: Gary earned overtime, so he worked at least 40 hours. for which
+      he was paid 40 hours * $12/hour = $<<40*12=480>>480 at his normal wage. This
+      means that $696 - $480 = $<<696-480=216>>216 was earned at his overtime wage.
+      His overtime wage is 1.5 his normal wage, or $12 * 1.5 = $<<12*1.5=18>>18 per
+      hour. So Gary worked $216 / $18 per hour = <<216/18=12>>12 hours' worth of overtime.
+      So in total, Gary worked 40 hours + 12 hours = <<40+12=52>>52 hours that week.
+- inputs:
+    question: A state fair charges $5 for a ticket. Two-thirds of the people who buy
+      a ticket will buy deep-fried fair food for $8, one quarter will go on a ride
+      for $4, and one eighth will spend $15 on a souvenir. The fair made $2520 from
+      tickets. How many dollars did they make in all?
+  metadata:
+    split: train
+  outputs:
+    answer: '6657'
+    gold_reasoning: The fair made $2520 from tickets, so they had 2520 / 5 = <<2520/5=504>>504
+      people attend the fair. Two-thirds of those people will buy food, so 504 * 2
+      / 3 = <<504*2/3=336>>336 people will buy food. The fair will make 336 * 8 =
+      $<<336*8=2688>>2688 from food. A quarter of the people will go on a ride, so
+      504 / 4 = <<504/4=126>>126 people will go on a ride. The fair will make 126
+      * 4 = $<<126*4=504>>504 from rides. An eighth of the people will buy a souvenir,
+      so 504 / 8 = <<504/8=63>>63 people will buy souvenirs. The fair will make 63
+      * 15 = $<<63*15=945>>945 from souvenirs. In all, the fair will make 2520 + 2688
+      + 504 + 945 = $<<2520+2688+504+945=6657>>6657.
+- inputs:
+    question: A roll of 25 m wire weighs 5 kg. How much does a 75 m roll weigh?
+  metadata:
+    split: train
+  outputs:
+    answer: '15'
+    gold_reasoning: 'We know that the 75 m roll is three times bigger than the 25
+      m roll because 75 m / 25 m = <<75/25=3>>3 This means the 75 m roll weighs 3
+      times more than the 25 m roll: 5 kg * 3 = 15 Kg'
+- inputs:
+    question: Megan pays $16 for a shirt that costs $22 before sales. What is the
+      amount of the discount?
+  metadata:
+    split: train
+  outputs:
+    answer: '6'
+    gold_reasoning: 'Let x be the amount of the discount. We have, 22 - x = $16 We
+      change the writing of the equation: 22 - x + x = 16 + x So, 22 = 16 + x We then
+      Remove 16 from both sides: 22 - 16 = 16 + x - 16 So, 22 - 16 = x So, the amount
+      of the discount is x = $<<6=6>>6.'
+- inputs:
+    question: George was selling some of his old toys on the internet. He managed
+      to sell 3 little cars and a set of Legos. In total, he earned $45. How much
+      did the Legos set cost, if one little car was sold for $5?
+  metadata:
+    split: train
+  outputs:
+    answer: '30'
+    gold_reasoning: George sold 3 cars, so he earned 3 cars * $5/car = $<<3*5=15>>15
+      from them. The lego set cost was then $45 - $15 = $<<45-15=30>>30.
+inputs:
+  question: The question to be answered.
+model: gpt-4o-mini
+name: gsm8k-base
+outputs:
+  answer: The answer to the question.
+response_format:
+  json_schema: null
+  type: json_object
+---
+<system>
+You are an expert mathematician specializing in solving arithmetic word problems. Given a problem, you need to provide a detailed step-by-step reasoning and the final answer in JSON format. Your detailed reasoning should show all calculations and logical steps clearly.
+
+Your output must always be formatted as a JSON object with the keys "gold_reasoning" and "answer".
+
+Example format to follow:
+{
+  "gold_reasoning": "[Step-by-step reasoning with all calculations shown]",
+  "answer": "[Final answer]"
+}
+
+Use the following example demonstrations to understand the desired format and output:
+
+{_FEWSHOT_}
+
+Now, please solve the following problem:
+{question}
+</system>
+<user>
+Question:
+{question}
+</user>

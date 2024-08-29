@@ -1,0 +1,82 @@
+---
+fewshot:
+- inputs:
+    question: Vincent has 72 inches of rope that he wants to use for a project, but
+      he needs to cut it into smaller pieces first. He cuts it into 12 equal length
+      pieces, but then he realizes it's too short, so he ties three pieces together.
+      The knots then make each piece 1 inch shorter. How long are his pieces of rope
+      after all this?
+  metadata:
+    split: train
+  outputs:
+    answer: '15'
+    gold_reasoning: Each small piece is 6 inches because 72 / 12 = <<72/12=6>>6. Each
+      piece is then 5 inches long after the knots are tied because 6-1=<<5=5>>5 The
+      three pieces tied together are now 15 inches long because 5 x 3 = <<5*3=15>>15
+- inputs:
+    question: Bruno wants to buy two and one-half dozens of pens. How many pens will
+      he have?
+  metadata:
+    split: train
+  outputs:
+    answer: '30'
+    gold_reasoning: Since a dozen is equal to 12, then two dozens are equal to 12
+      x 2= <<24=24>>24. One-half dozen is equal to 12/2 = <<12/2=6>>6. Thus, Bruno
+      will have a total of 24 + 6 = <<24+6=30>>30 pens.
+- inputs:
+    question: Dave bought 8 books about animals, 6 books about outer space, and 3
+      books about trains to keep him busy over the holidays. Each book cost $6. How
+      much did Dave spend on the books?
+  metadata:
+    split: train
+  outputs:
+    answer: '102'
+    gold_reasoning: "Dave buys 8 books + 6 books + 3 books = <<8+6+3=17>>17 books\
+      \ in total. He has to spend 17 books \xD7 $6/book = $<<17*6=102>>102 if he wants\
+      \ to buy all the books."
+- inputs:
+    question: Mark is baking bread. He has to let it rise for 120 minutes twice. He
+      also needs to spend 10 minutes kneading it and 30 minutes baking it. How many
+      minutes does it take Mark to finish making the bread?
+  metadata:
+    split: train
+  outputs:
+    answer: '280'
+    gold_reasoning: 'First find the total rise time: 120 minutes * 2 = <<120*2=240>>240
+      minutes Then add the rise time to the baking and kneading time: 240 minutes
+      + 10 minutes + 30 minutes = <<240+10+30=280>>280 minutes'
+- inputs:
+    question: John decides to replace all his hats.  He has enough hats to wear a
+      different one every day for 2 weeks.  If each hat costs $50 how much do his
+      hats cost?
+  metadata:
+    split: train
+  outputs:
+    answer: '700'
+    gold_reasoning: He has 2*7=<<2*7=14>>14 hats So they cost 14*50=$<<14*50=700>>700
+inputs:
+  question: The question to be answered.
+model: gpt-4o-mini
+name: gsm8k-base
+outputs:
+  answer: The answer to the question.
+response_format:
+  json_schema: null
+  type: json_object
+---
+<system>
+You are a math tutor tasked with solving mathematical word problems. Think step-by-step to ensure accuracy and clarity in your solutions.
+
+Your output must be formatted as a JSON object, including a detailed reasoning for each step and the final answer. Structure your response in the following format:
+{
+  "gold_reasoning": [detailed step-by-step reasoning],
+  "answer": [final answer]
+}
+</system>
+<user>
+Task demonstrations:
+{_FEWSHOT_}
+
+Now solve the following problem:
+{question}
+</user>
